@@ -1,0 +1,61 @@
+{% extends "crud/base.html" %}
+
+{% block content %} 
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Branch</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for field in students %}
+      <tr>
+        <td> {{ field.id }} </td>
+        <td>{{ field.fname }} </td>
+        <td>{{ field.lname }} </td>
+        <td>{{ field.email }} </td>
+        <td>{{ field.phone }} </td>
+        <td>{{ field.branch}} </td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal{{ field.id }}"><i class="fa-solid fa-circle-info"></i> View
+          </button>
+            {% comment %} Modal View  {% endcomment %}
+<!-- Modal -->
+<div class="modal fade" id="viewModal{{ field.id }}" tabindex="-1" aria-labelledby="viewModalLabel{{ field.id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="viewModalLabel{{ field.id }}">Student {{ field.fname }} {{ field.lname }} </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>Student ID:</strong>{{field.id}}</li>
+          <li><strong>First Name:</strong>{{field.fname}}</li>
+          <li><strong>Last Name:</strong>{{field.lname}}</li>
+          <li><strong>Email:</strong>{{field.email}}</li>
+          <li><strong>Phone:</strong>{{field.phone}}</li>
+          <li><strong>Branch:</strong>{{field.branch}}</li>
+
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+            <a href="{% url "update" field.id %}" class="btn btn-warning btn-sm"><i class="fa-sharp fa-solid fa-pen-to-square"></i> Edit</a>
+            <a href="" class="btn btn-danger btn-sm"> Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}
